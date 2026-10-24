@@ -1,0 +1,24 @@
+name: underwater-objectnav
+
+services:
+  underwater-nav:
+    # The image is built by ./docker/run.sh build, which invokes BuildKit with
+    # the network.host entitlement required by the host-local proxy.
+    image: underwater-object-nav:noetic-stonefish-1.6
+    network_mode: host
+    ipc: host
+    gpus: all
+    environment:
+      DISPLAY: ${DISPLAY}
+      QT_X11_NO_MITSHM: "1"
+      NVIDIA_VISIBLE_DEVICES: all
+      NVIDIA_DRIVER_CAPABILITIES: compute,utility,graphics,display
+      ROS_MASTER_URI: http://localhost:11311
+      ROS_HOSTNAME: localhost
+    volumes:
+      - ..:/workspace
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    working_dir: /workspace
+    stdin_open: true
+    tty: true
+    command: bash

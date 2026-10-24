@@ -1,0 +1,14 @@
+build/
+devel/
+install/
+logs/
+.catkin_tools/
+.catkin_workspace
+src/CMakeLists.txt
+
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+underwater_objectnav_online_runs/
+underwater_objectnav_dataset/

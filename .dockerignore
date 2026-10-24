@@ -1,0 +1,9 @@
+**
+!docker/
+!docker/**
+!src/
+!src/image_process_ResNet50/
+!src/image_process_ResNet50/requirements-ubuntu2004.txt
+!src/ObjectNav/
+!src/ObjectNav/objectnav_bc/
+!src/ObjectNav/objectnav_bc/requirements.txt

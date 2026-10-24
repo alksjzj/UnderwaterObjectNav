@@ -22,12 +22,12 @@
   <arg name="online_config"
        default="$(find objectnav)/config/online.yaml"/>
   <arg name="record_root"
-       default="/home/yzw/work_khd/catkin_ws/underwater_objectnav_online_runs"/>
+       default="/workspace/underwater_objectnav_online_runs"/>
   <arg name="device" default="cuda:0"/>
 
   <arg name="conda_executable"
-       default="/home/yzw/miniforge3/bin/conda"/>
-  <arg name="conda_env" default="duo-gfl"/>
+       default="/opt/conda/bin/conda"/>
+  <arg name="conda_env" default="objectnav-gfl"/>
   <arg name="worker_host" default="127.0.0.1"/>
   <arg name="worker_port" default="29500"/>
   <arg name="inference_interval_s" default="2.0"
