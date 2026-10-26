@@ -1,0 +1,119 @@
+ros:
+  vehicle_name: bricsbot
+  rgb_topic: /bricsbot/rgb/image_color
+  depth_topic: /bricsbot/depth/image_depth
+  pose_topic: /bricsbot/odometry
+  action_request_topic: /underwater_objectnav/action_request
+  action_status_topic: /underwater_objectnav/action_status
+  respawn_service: /stonefish_simulator/respawn_robot
+  collector_start_service: /objectnav_data_collector/start_episode
+  collector_end_service: /objectnav_data_collector/end_episode
+
+detector:
+  config_path: gfl_r50_inference.py
+  checkpoint_path: ""       # Prefer the required launch argument.
+  threshold_file: ""        # Optional calibrated echinus threshold JSON.
+  candidate_score_threshold: 0.001
+  classes: [echinus, rock]
+  score_thresholds:
+    echinus: 0.50
+    rock: 0.50
+
+camera:
+  width: 640
+  height: 480
+  fx: 457.01
+  fy: 457.01
+  cx: 319.5
+  cy: 239.5
+  T_base_camera:
+    translation_m: [0.20, 0.0, -0.02]
+    rpy_rad: [1.5707963268, 0.0, 1.5707963268]
+
+depth:
+  min_depth_m: 0.20
+  max_depth_m: 10.0
+  min_roi_size_px: 5
+  min_valid_depth_pixels: 3
+  echinus_center_roi_ratio: 0.40
+  rock_center_roi_ratio: 0.40
+  rock_depth_stride: 4
+  rock_depth_gate_m: 0.20
+  obstacle_depth_stride: 4
+  obstacle_z_min_offset_m: -0.15
+  obstacle_z_max_offset_m: 0.19
+
+map:
+  global:
+    origin_x: -7.0
+    origin_y: -4.0
+    width_m: 14.0
+    height_m: 8.0
+    resolution_m: 0.10
+  local:
+    width_m: 3.0
+    height_m: 3.0
+    resolution_m: 0.05
+  robot_radius_m: 0.20
+  visited_radius_m: 0.20
+  echinus_radius_m: 0.10
+
+policy:
+  max_steps: 100
+  center_tolerance_rad: 0.12
+  success_distance_m: 0.65
+  success_confirmation_frames: 2
+  stop_requires_front_clear: true
+  target_lost_steps: 3
+  target_switch_distance_ratio: 0.70
+  target_match_iou: 0.10
+  target_match_center_ratio: 0.15
+  observe_turn_steps: 24
+  avoid_turn_steps: 2
+  search_forward_steps: 5
+  turn_primitive_rad: 0.2617993878
+  image_rock_margin: 0.30
+  rock_direction_margin: 0.20
+  rock_min_evidence: 1.0
+  rock_score_weight: 1.0
+  unexplored_score_weight: 1.0
+  visited_penalty_weight: 0.8
+  obstacle_penalty_weight: 2.0
+  turn_cost_weight: 0.05
+  search_min_radius_m: 0.4
+  search_max_radius_m: 6.0
+  forward_region_ratio: 0.50
+  forward_corridor_ratio: 0.25
+  obstacle_occupancy_threshold: 0.10
+  safe_obstacle_distance_m: 0.45
+  side_clearance_margin: 0.03
+
+timing:
+  sync_queue_size: 20
+  sync_slop_s: 0.08
+  max_observation_age_s: 0.30
+  inference_timeout_s: 3.0
+  worker_connect_timeout_s: 2.0
+  worker_connect_retry_s: 1.0
+  post_action_settle_s: 0.50
+  respawn_settle_s: 2.0
+  inter_episode_delay_s: 1.0
+  service_wait_timeout_s: 30.0
+  action_status_timeout_s: 20.0
+
+episode:
+  auto_start: true
+  scene_id: rock_seaurchin
+  goal_category: echinus
+  random_seed: 42
+  max_episodes: 0          # 0 means unlimited.
+
+spawn:
+  scenario_file: ""       # Supplied by launch.
+  robot_name: bricsbot
+  pool_static_name: PoolFloor
+  rock_name_regex: "^RockSurface"
+  fixed_z_m: 3.3
+  boundary_margin_m: 0.45
+  rock_clearance_m: 0.50
+  max_sampling_attempts: 10000

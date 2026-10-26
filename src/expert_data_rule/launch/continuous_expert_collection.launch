@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="scenario_file"
+       default="$(find aquaflow_stonefish)/scenarios/Rock_SeaUrchin.scn"/>
+  <arg name="scene_id" default="rock_seaurchin"/>
+  <arg name="simulation_data" default="$(find aquaflow_stonefish)/data"/>
+  <arg name="simulation_rate" default="100.0"/>
+  <arg name="graphics_resolution" default="1200 800"/>
+  <arg name="graphics_quality" default="medium"/>
+  <arg name="vehicle_name" default="bricsbot"/>
+  <arg name="spawn_z_m" default="3.3"/>
+  <arg name="enable_thrusters" default="false"
+       doc="Set true only when the controller is ready."/>
+
+  <arg name="expert_config"
+       default="$(find expert_data_rule)/config/rule_expert.yaml"/>
+  <arg name="detector_checkpoint"
+       doc="Trained GFL ResNet-50 checkpoint (.pth)."/>
+  <arg name="detector_threshold_file" default=""/>
+  <arg name="device" default="cuda:0"/>
+  <arg name="conda_executable" default="/home/yzw/miniforge3/bin/conda"/>
+  <arg name="conda_env" default="duo-gfl"/>
+  <arg name="worker_host" default="127.0.0.1"/>
+  <arg name="worker_port" default="29510"/>
+  <arg name="dataset_root"
+       default="$(find data_generate)/underwater_objectnav_dataset"/>
+
+  <include file="$(find stonefish_ros)/launch/simulator.launch">
+    <arg name="simulation_data" value="$(arg simulation_data)"/>
+    <arg name="scenario_description" value="$(arg scenario_file)"/>
+    <arg name="simulation_rate" value="$(arg simulation_rate)"/>
+    <arg name="graphics_resolution" value="$(arg graphics_resolution)"/>
+    <arg name="graphics_quality" value="$(arg graphics_quality)"/>
+  </include>
+
+  <node pkg="robot_control" type="action_executor.py"
+        name="action_executor" output="screen">
+    <rosparam command="load"
+              file="$(find robot_control)/config/action_executor.yaml"/>
+    <param name="action_executor/vehicle_name" value="$(arg vehicle_name)"/>
+    <param name="action_executor/command_delay_s" value="0.0"/>
+    <param name="action_executor/target_z" value="$(arg spawn_z_m)"/>
+  </node>
+
+  <include file="$(find robot_control)/launch/cascaded_pid_control.launch">
+    <arg name="vehicle_name" value="$(arg vehicle_name)"/>
+    <arg name="reference_topic" value="/aquaflow/nominal_pose"/>
+    <arg name="reference_mode" value="position"/>
+  </include>
+
+  <node pkg="aquaflow_stonefish" type="brics6_thruster_allocator.py"
+        name="brics6_thruster_allocator" output="screen">
+    <param name="vehicle_name" value="$(arg vehicle_name)"/>
+    <param name="enabled" value="$(arg enable_thrusters)"/>
+  </node>
+
+  <node pkg="data_generate" type="objectnav_data_collector.py"
+        name="objectnav_data_collector" output="screen">
+    <rosparam command="load" file="$(find data_generate)/config/collector.yaml"/>
+    <param name="vehicle_name" value="$(arg vehicle_name)"/>
+    <param name="dataset_root" value="$(arg dataset_root)"/>
+    <param name="auto_end_on_stop" value="false"/>
+  </node>
+
+  <node pkg="expert_data_rule" type="perception_worker_launcher.py"
+        name="rule_expert_perception_worker" output="screen"
+        respawn="true" respawn_delay="2.0"
+        args="--conda-executable=$(arg conda_executable) --conda-env=$(arg conda_env) --package-root=$(find expert_data_rule) --config=$(arg expert_config) --checkpoint=$(arg detector_checkpoint) --threshold-file=$(arg detector_threshold_file) --device=$(arg device) --host=$(arg worker_host) --port=$(arg worker_port)"/>
+
+  <node pkg="expert_data_rule" type="rule_expert_node.py"
+        name="rule_based_expert" output="screen">
+    <param name="config" value="$(arg expert_config)"/>
+    <param name="scenario_file" value="$(arg scenario_file)"/>
+    <param name="scene_id" value="$(arg scene_id)"/>
+    <param name="spawn_z_m" value="$(arg spawn_z_m)"/>
+    <param name="worker_host" value="$(arg worker_host)"/>
+    <param name="worker_port" value="$(arg worker_port)"/>
+  </node>
+</launch>
