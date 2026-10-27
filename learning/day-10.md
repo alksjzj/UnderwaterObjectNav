@@ -19,3 +19,7 @@
 下一小段定位 ROSScenarioParser::ParseRobot：基础 ScenarioParser::ParseRobot 与额外 ROS 接口的职责划分。待学习者预测：仅移除机器人 SCN 中的推进器 ros_subscriber 标签、其他定义保留，机器人实体是否仍会创建？尚未独立作答或实验。
 
 本轮只静态读取本机源码、计划与记录；未启动 ROS、检查现有 Master、发送推进器命令或执行仿真实验。未修改控制、场景和启动文件，未创建临时实验文件。
+
+## 代码整理后的继续位置
+
+之后按学习者要求，将 `src/` 切换到师兄整理后的 `f3abe92`，重新编译并更新第十天以后的计划；这次迁移不算第十天的教学或验收。Stonefish ROS 的上述两个解析源码与迁移前一致。下一个对话仍先从上面的 `ros_subscriber` 预测及 `ROSScenarioParser::ParseRobot()` 继续，不重复第九天或假定预测已回答。旧源码和构建产物留在 `.local-backups/pre-upstream-f3abe92/`，该本地备份不随 Git 克隆。

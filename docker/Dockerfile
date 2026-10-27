@@ -96,8 +96,8 @@ RUN curl --fail --location --show-error \
     && "${CONDA_ROOT}/bin/conda" create -y -n objectnav-gfl python=3.10 pip \
     && "${CONDA_ROOT}/bin/conda" clean -afy
 
-COPY src/image_process_ResNet50/requirements-ubuntu2004.txt /tmp/requirements-gfl.txt
-COPY src/ObjectNav/objectnav_bc/requirements.txt /tmp/requirements-objectnav.txt
+COPY src/algorithm/objectnav/image_process_ResNet50/requirements-ubuntu2004.txt /tmp/requirements-gfl.txt
+COPY src/algorithm/objectnav/ObjectNav/objectnav_bc/requirements.txt /tmp/requirements-objectnav.txt
 
 # The default index is the Tsinghua PyPI mirror, which is dramatically faster
 # than the public index from mainland China. Override it with

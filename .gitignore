@@ -10,6 +10,7 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 .vscode/
+.local-backups/
 
 underwater_objectnav_online_runs/
 underwater_objectnav_dataset/

@@ -10,14 +10,9 @@
   <arg name="vehicle_name" default="bricsbot"/>
   <arg name="vehicle_model" default="bricsbot"
        doc="bluerov2 uses 8-thruster allocator; bricsbot uses the measured 6-thruster allocator."/>
-  <arg name="graphics_resolution" default="1200 800"/>
-  <arg name="graphics_quality" default="medium"
-       doc="Stonefish graphics quality: low, medium or high"/>
   <include file="$(find aquaflow_stonefish)/launch/aquaflow_pool.launch">
     <arg name="scene" value="$(arg scene)"/>
     <arg name="vehicle_model" value="$(arg vehicle_model)"/>
-    <arg name="graphics_resolution" value="$(arg graphics_resolution)"/>
-    <arg name="graphics_quality" value="$(arg graphics_quality)"/>
   </include>
 
   <node pkg="aquaflow_stonefish" type="nominal_reference_publisher.py"

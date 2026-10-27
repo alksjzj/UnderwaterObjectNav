@@ -213,14 +213,11 @@ class PlanarPIDTracker:
 
         dt = 1.0 / 20.0 if self.last_time is None else max(1e-3, min(0.2, (now - self.last_time).to_sec()))
         self.last_time = now
-        p = self.odom.pose.pose.position    #这里都是获得当前位置信息
-        q = self.odom.pose.pose.orientation #这里都是获得当前四元数
+        p = self.odom.pose.pose.position
+        q = self.odom.pose.pose.orientation
         yaw = yaw_from_quat(q)
         nearest = 0  # reference_processor already projects to nearest
-        target = self.path.poses[min(len(self.path.poses) - 1, nearest + self.lookahead)].pose  #目标值
-        '''
-        下面这三行就是误差=目标值-反馈值，然后将误差转换到机体坐标系下，ex,ey是机体坐标系下的误差，eyaw是航向角误差
-        '''
+        target = self.path.poses[min(len(self.path.poses) - 1, nearest + self.lookahead)].pose
         dx, dy = target.position.x - p.x, target.position.y - p.y
         c, s = math.cos(yaw), math.sin(yaw)
         ex, ey = c * dx + s * dy, -s * dx + c * dy

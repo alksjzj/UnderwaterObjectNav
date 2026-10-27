@@ -15,6 +15,7 @@ services:
       NVIDIA_DRIVER_CAPABILITIES: compute,utility,graphics,display
       ROS_MASTER_URI: http://localhost:11311
       ROS_HOSTNAME: localhost
+      BUILD_JOBS: ${BUILD_JOBS:-2}
     volumes:
       - ..:/workspace
       - /tmp/.X11-unix:/tmp/.X11-unix:rw

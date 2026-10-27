@@ -33,10 +33,14 @@ Commands:
   demo        Start the low-quality empty-pool Stonefish scene
   tracking    Start BricsBot tracking with thrusters disabled
   objectnav   Start online ObjectNav (requires model weights)
+  expert      Start rule expert collection (requires detector_checkpoint:=...)
+
+Extra arguments after objectnav or expert are passed to roslaunch.
 EOF
 }
 
 command_name="${1:-}"
+if (( $# > 0 )); then shift; fi
 case "${command_name}" in
   build)
     if ! docker buildx version >/dev/null 2>&1; then
@@ -46,6 +50,7 @@ case "${command_name}" in
     # The build needs host networking: the host proxy listens on 127.0.0.1.
     # BuildKit therefore needs the explicit network.host entitlement.
     docker buildx build \
+      --load \
       --file "${project_dir}/docker/Dockerfile" \
       --target full \
       --tag underwater-object-nav:noetic-stonefish-1.6 \
@@ -63,12 +68,12 @@ case "${command_name}" in
     ;;
   compile)
     compose run --rm underwater-nav bash -lc \
-      'catkin_make -j2 -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON3_EXECUTABLE=/usr/bin/python3 && source devel/setup.bash && rospack find stonefish_ros && rospack find objectnav'
+      'catkin_make -j"${BUILD_JOBS:-2}" -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON3_EXECUTABLE=/usr/bin/python3 && source devel/setup.bash && rospack find stonefish_ros && rospack find objectnav && rospack find expert_data_rule'
     ;;
   verify)
     allow_x11
     compose run --rm underwater-nav bash -lc \
-      'set -e; nvidia-smi --query-gpu=name,driver_version,memory.total --format=csv,noheader; glxinfo -B | grep -E "direct rendering|OpenGL vendor|OpenGL renderer|OpenGL core profile version"; test "$(rosversion -d)" = noetic; pkg-config --modversion stonefish; source devel/setup.bash; rospack find aquaflow_stonefish; conda run -n objectnav-gfl python -c "import torch, mmcv, mmengine, mmdet; print(\"PyTorch\", torch.__version__, \"CUDA\", torch.version.cuda, \"available\", torch.cuda.is_available()); print(\"MMCV\", mmcv.__version__, \"MMEngine\", mmengine.__version__, \"MMDetection\", mmdet.__version__)"; cd src/ObjectNav && PYTHONPATH=/workspace/src/ObjectNav:/workspace/src/hofa_mpc_ros/src conda run -n objectnav-gfl python -m pytest -q tests ../hofa_mpc_ros/test'
+      'set -e; nvidia-smi --query-gpu=name,driver_version,memory.total --format=csv,noheader; glxinfo -B | grep -E "direct rendering|OpenGL vendor|OpenGL renderer|OpenGL core profile version"; test "$(rosversion -d)" = noetic; pkg-config --modversion stonefish; source devel/setup.bash; rospack find aquaflow_stonefish; rospack find expert_data_rule; conda run -n objectnav-gfl python -c "import torch, mmcv, mmengine, mmdet; print(\"PyTorch\", torch.__version__, \"CUDA\", torch.version.cuda, \"available\", torch.cuda.is_available()); print(\"MMCV\", mmcv.__version__, \"MMEngine\", mmengine.__version__, \"MMDetection\", mmdet.__version__)"; cd /workspace/src/algorithm/objectnav/ObjectNav; PYTHONPATH="$PWD" conda run -n objectnav-gfl python -m pytest -q tests; cd ../expert_data_rule; PYTHONPATH="$PWD" conda run -n objectnav-gfl python -m pytest -q tests'
     ;;
   shell)
     allow_x11
@@ -82,12 +87,21 @@ case "${command_name}" in
   tracking)
     allow_x11
     compose run --rm underwater-nav bash -lc \
-      'source devel/setup.bash && roslaunch aquaflow_stonefish tracking.launch scene:=random_pillars vehicle_model:=bricsbot enable:=false graphics_quality:=low'
+      'source devel/setup.bash && roslaunch aquaflow_stonefish tracking.launch scene:=random_pillars vehicle_model:=bricsbot enable:=false'
     ;;
   objectnav)
     allow_x11
     compose run --rm underwater-nav bash -lc \
-      'source devel/setup.bash && roslaunch objectnav objectnav_online.launch enable:=false conda_executable:=/opt/conda/bin/conda conda_env:=objectnav-gfl record_root:=/workspace/underwater_objectnav_online_runs graphics_quality:=low'
+      'source devel/setup.bash && roslaunch objectnav objectnav_online.launch enable:=false conda_executable:=/opt/conda/bin/conda conda_env:=objectnav-gfl record_root:=/workspace/underwater_objectnav_online_runs graphics_quality:=low "$@"' -- "$@"
+    ;;
+  expert)
+    if (( $# == 0 )); then
+      echo 'Pass detector_checkpoint:=/workspace/path/to/checkpoint.pth (the trained weights are not included).' >&2
+      exit 1
+    fi
+    allow_x11
+    compose run --rm underwater-nav bash -lc \
+      'source devel/setup.bash && roslaunch expert_data_rule continuous_expert_collection.launch enable_thrusters:=false conda_executable:=/opt/conda/bin/conda conda_env:=objectnav-gfl dataset_root:=/workspace/underwater_objectnav_dataset "$@"' -- "$@"
     ;;
   *)
     usage
