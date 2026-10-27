@@ -104,7 +104,9 @@ rostopic echo -n 1 /bricsbot/odometry   # BricsBot 场景
 
 ## 本机验证与限制
 
-2026-10-27 在现有 Noetic/Stonefish 镜像内验证了新版源码：Catkin 编译通过并发现 6 个包；GPU/OpenGL、PyTorch 和 OpenMMLab 可加载；ObjectNav 测试 11 项、规则专家测试 10 项通过。实际启动空水池后，观察到 `/stonefish_simulator` 发布 `/bluerov2/odometry`。追踪、规则专家和 BC 在线 launch 的节点列表已解析，但这些检查不代表控制运动或模型闭环通过。
+2026-10-27 使用本机已有 Noetic/Stonefish 镜像验证了新版源码；独立干净 Git 克隆也完成了编译和测试。Catkin 发现 6 个包，GPU/OpenGL、PyTorch 和 OpenMMLab 可加载，ObjectNav 测试 11 项、规则专家测试 10 项通过。实际启动空水池和海胆场景，均观察到里程计；BricsBot 跟踪入口在禁用推进器时发布六个零，并发布 IMU。规则专家和 BC 在线 launch 的节点列表已解析；这些检查不代表受控运动或模型闭环通过。
+
+本次从 Dockerfile 完整重建镜像在 Conda 创建环境的元数据阶段长时间等待，主动停止后未完成。两个新版 requirements 文件已单独验证能够进入 Docker 构建上下文；此结果和已有镜像测试**不能证明全新机器上的完整镜像构建已通过**。遇到网络问题时先检查 Docker daemon 和构建阶段的代理、下载源，再重试 `./docker/run.sh build`。
 
 完整规则专家采集和 BC 在线导航尚未验证：缺少训练权重；旧版的测试结果和图形帧率不能直接作为新版的运行结果。
 
