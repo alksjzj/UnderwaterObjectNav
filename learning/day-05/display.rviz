@@ -1,0 +1,57 @@
+Panels:
+  - Class: rviz/Displays
+    Name: Displays
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Class: rviz/Grid
+      Name: Grid 0.1 m
+      Enabled: true
+      Value: true
+      Cell Size: 0.1
+      Plane Cell Count: 20
+      Color: 130; 130; 130
+      Alpha: 0.65
+      Reference Frame: <Fixed Frame>
+      Plane: XY
+    - Class: rviz/RobotModel
+      Name: BricsBot Model
+      Enabled: true
+      Value: true
+      Robot Description: robot_description
+      TF Prefix: bricsbot
+      Visual Enabled: true
+      Collision Enabled: false
+      Alpha: 1
+    - Class: rviz/TF
+      Name: TF
+      Enabled: true
+      Value: true
+      Show Axes: true
+      Show Arrows: true
+      Show Names: false
+      Marker Scale: 0.12
+  Global Options:
+    Fixed Frame: world_ned
+    Background Color: 48; 48; 48
+    Frame Rate: 30
+  Enabled: true
+  Name: root
+  Tools:
+    - Class: rviz/Interact
+  Views:
+    Current:
+      Class: rviz/Orbit
+      Distance: 1.65
+      Invert Z Axis: true
+      Focal Point:
+        X: 0
+        Y: 0
+        Z: 0
+      Pitch: 0.65
+      Yaw: 0.7
+Window Geometry:
+  Height: 760
+  Width: 1150
+  X: 100
+  Y: 100

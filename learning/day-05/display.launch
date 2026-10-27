@@ -1,0 +1,11 @@
+<launch>
+  <!-- Synthetic fixed world pose: this experiment does not run Stonefish. -->
+  <arg name="variant" default="original"/>
+  <node pkg="tf" type="static_transform_publisher" name="day5_test_world_pose"
+        args="0 0 0 0 0 0 world_ned bricsbot/base_link 100"/>
+  <include file="$(find aquaflow_stonefish)/launch/visualization.launch">
+    <arg name="vehicle_model" value="bricsbot"/>
+    <arg name="robot_description_file" value="../../learning/day-05/urdf/$(arg variant).urdf"/>
+    <arg name="rviz_config" value="../../learning/day-05/display.rviz"/>
+  </include>
+</launch>

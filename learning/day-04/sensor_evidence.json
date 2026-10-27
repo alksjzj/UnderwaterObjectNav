@@ -1,0 +1,265 @@
+{
+  "master": "http://localhost:11341",
+  "scene": "/workspace/learning/day-04/scenarios/sensor_scene.scn",
+  "nodes": [
+    "/day4_sensor_observer_180_1792934696102",
+    "/rosout",
+    "/stonefish_simulator"
+  ],
+  "topic_types": {
+    "/rosout_agg": "rosgraph_msgs/Log",
+    "/rosout": "rosgraph_msgs/Log",
+    "/tf": "tf2_msgs/TFMessage",
+    "/bricsbot/odometry": "nav_msgs/Odometry",
+    "/bricsbot/pressure": "sensor_msgs/FluidPressure",
+    "/bricsbot/depth/image_depth/compressedDepth": "sensor_msgs/CompressedImage",
+    "/bricsbot/depth/image_depth/compressedDepth/parameter_descriptions": "dynamic_reconfigure/ConfigDescription",
+    "/bricsbot/depth/image_depth/compressedDepth/parameter_updates": "dynamic_reconfigure/Config",
+    "/bricsbot/depth/image_depth/compressed": "sensor_msgs/CompressedImage",
+    "/bricsbot/depth/image_depth/compressed/parameter_descriptions": "dynamic_reconfigure/ConfigDescription",
+    "/bricsbot/depth/image_depth/compressed/parameter_updates": "dynamic_reconfigure/Config",
+    "/bricsbot/depth/image_depth": "sensor_msgs/Image",
+    "/bricsbot/depth/image_depth/theora": "theora_image_transport/Packet",
+    "/bricsbot/depth/image_depth/theora/parameter_descriptions": "dynamic_reconfigure/ConfigDescription",
+    "/bricsbot/depth/image_depth/theora/parameter_updates": "dynamic_reconfigure/Config",
+    "/bricsbot/depth/camera_info": "sensor_msgs/CameraInfo",
+    "/bricsbot/rgb/image_color/compressedDepth": "sensor_msgs/CompressedImage",
+    "/bricsbot/rgb/image_color/compressedDepth/parameter_descriptions": "dynamic_reconfigure/ConfigDescription",
+    "/bricsbot/rgb/image_color/compressedDepth/parameter_updates": "dynamic_reconfigure/Config",
+    "/bricsbot/rgb/image_color/compressed": "sensor_msgs/CompressedImage",
+    "/bricsbot/rgb/image_color/compressed/parameter_descriptions": "dynamic_reconfigure/ConfigDescription",
+    "/bricsbot/rgb/image_color/compressed/parameter_updates": "dynamic_reconfigure/Config",
+    "/bricsbot/rgb/image_color": "sensor_msgs/Image",
+    "/bricsbot/rgb/image_color/theora": "theora_image_transport/Packet",
+    "/bricsbot/rgb/image_color/theora/parameter_descriptions": "dynamic_reconfigure/ConfigDescription",
+    "/bricsbot/rgb/image_color/theora/parameter_updates": "dynamic_reconfigure/Config",
+    "/bricsbot/rgb/camera_info": "sensor_msgs/CameraInfo",
+    "/bricsbot/setpoint/pwm": "std_msgs/Float64MultiArray"
+  },
+  "messages": [
+    {
+      "topic": "/bricsbot/rgb/image_color",
+      "stamp": 1792934696.268955,
+      "frame": "bricsbot/rgb_camera",
+      "width": 640,
+      "height": 480,
+      "encoding": "rgb8",
+      "bytes": 921600
+    },
+    {
+      "topic": "/bricsbot/depth/image_depth",
+      "stamp": 1792934696.338955,
+      "frame": "bricsbot/depth_camera",
+      "width": 640,
+      "height": 480,
+      "encoding": "32FC1",
+      "bytes": 1228800,
+      "samples": [
+        {
+          "pixel_uv": [
+            320,
+            240
+          ],
+          "value_m": 1.1348602771759033
+        },
+        {
+          "pixel_uv": [
+            160,
+            120
+          ],
+          "value_m": 0.0
+        },
+        {
+          "pixel_uv": [
+            480,
+            360
+          ],
+          "value_m": 1.1192952394485474
+        }
+      ]
+    },
+    {
+      "topic": "/bricsbot/odometry",
+      "stamp": 1792934696.358955,
+      "frame": "world_ned",
+      "position": [
+        -4.998765841779176,
+        -0.0032199567121574788,
+        0.25807615503820763
+      ],
+      "child_frame": "bricsbot/odometry"
+    },
+    {
+      "topic": "/bricsbot/rgb/camera_info",
+      "stamp": 1792934696.3989549,
+      "frame": "bricsbot/rgb_camera",
+      "width": 640,
+      "height": 480,
+      "fx": 457.0073621574767,
+      "fy": 457.0073621574766
+    },
+    {
+      "topic": "/bricsbot/depth/camera_info",
+      "stamp": 1792934696.478955,
+      "frame": "bricsbot/depth_camera",
+      "width": 640,
+      "height": 480,
+      "fx": 457.0073621574767,
+      "fy": 457.0073621574766
+    }
+  ],
+  "connections": [
+    {
+      "topic": "/bricsbot/rgb/image_color",
+      "publishers": [
+        "/stonefish_simulator"
+      ],
+      "subscribers": []
+    },
+    {
+      "topic": "/bricsbot/depth/image_depth",
+      "publishers": [
+        "/stonefish_simulator"
+      ],
+      "subscribers": []
+    },
+    {
+      "topic": "/bricsbot/odometry",
+      "publishers": [
+        "/stonefish_simulator"
+      ],
+      "subscribers": []
+    },
+    {
+      "topic": "/bricsbot/setpoint/pwm",
+      "publishers": [],
+      "subscribers": [
+        "/stonefish_simulator"
+      ]
+    }
+  ],
+  "control_commands_published": false,
+  "repeat_stream_check": {
+    "master_env": "http://localhost:11341",
+    "node_uri": "http://localhost:37247/",
+    "subscriptions": [
+      [
+        "/bricsbot/setpoint/pwm",
+        "std_msgs/Float64MultiArray"
+      ]
+    ],
+    "publications": [
+      [
+        "/rosout",
+        "rosgraph_msgs/Log"
+      ],
+      [
+        "/tf",
+        "tf2_msgs/TFMessage"
+      ],
+      [
+        "/bricsbot/odometry",
+        "nav_msgs/Odometry"
+      ],
+      [
+        "/bricsbot/pressure",
+        "sensor_msgs/FluidPressure"
+      ],
+      [
+        "/bricsbot/depth/image_depth/compressedDepth",
+        "sensor_msgs/CompressedImage"
+      ],
+      [
+        "/bricsbot/depth/image_depth/compressedDepth/parameter_descriptions",
+        "dynamic_reconfigure/ConfigDescription"
+      ],
+      [
+        "/bricsbot/depth/image_depth/compressedDepth/parameter_updates",
+        "dynamic_reconfigure/Config"
+      ],
+      [
+        "/bricsbot/depth/image_depth/compressed",
+        "sensor_msgs/CompressedImage"
+      ],
+      [
+        "/bricsbot/depth/image_depth/compressed/parameter_descriptions",
+        "dynamic_reconfigure/ConfigDescription"
+      ],
+      [
+        "/bricsbot/depth/image_depth/compressed/parameter_updates",
+        "dynamic_reconfigure/Config"
+      ],
+      [
+        "/bricsbot/depth/image_depth",
+        "sensor_msgs/Image"
+      ],
+      [
+        "/bricsbot/depth/image_depth/theora",
+        "theora_image_transport/Packet"
+      ],
+      [
+        "/bricsbot/depth/image_depth/theora/parameter_descriptions",
+        "dynamic_reconfigure/ConfigDescription"
+      ],
+      [
+        "/bricsbot/depth/image_depth/theora/parameter_updates",
+        "dynamic_reconfigure/Config"
+      ],
+      [
+        "/bricsbot/depth/camera_info",
+        "sensor_msgs/CameraInfo"
+      ],
+      [
+        "/bricsbot/rgb/image_color/compressedDepth",
+        "sensor_msgs/CompressedImage"
+      ],
+      [
+        "/bricsbot/rgb/image_color/compressedDepth/parameter_descriptions",
+        "dynamic_reconfigure/ConfigDescription"
+      ],
+      [
+        "/bricsbot/rgb/image_color/compressedDepth/parameter_updates",
+        "dynamic_reconfigure/Config"
+      ],
+      [
+        "/bricsbot/rgb/image_color/compressed",
+        "sensor_msgs/CompressedImage"
+      ],
+      [
+        "/bricsbot/rgb/image_color/compressed/parameter_descriptions",
+        "dynamic_reconfigure/ConfigDescription"
+      ],
+      [
+        "/bricsbot/rgb/image_color/compressed/parameter_updates",
+        "dynamic_reconfigure/Config"
+      ],
+      [
+        "/bricsbot/rgb/image_color",
+        "sensor_msgs/Image"
+      ],
+      [
+        "/bricsbot/rgb/image_color/theora",
+        "theora_image_transport/Packet"
+      ],
+      [
+        "/bricsbot/rgb/image_color/theora/parameter_descriptions",
+        "dynamic_reconfigure/ConfigDescription"
+      ],
+      [
+        "/bricsbot/rgb/image_color/theora/parameter_updates",
+        "dynamic_reconfigure/Config"
+      ],
+      [
+        "/bricsbot/rgb/camera_info",
+        "sensor_msgs/CameraInfo"
+      ]
+    ],
+    "wall_observation_seconds": 8.009633775000111,
+    "message_counts": {
+      "/bricsbot/rgb/image_color": 121,
+      "/bricsbot/depth/image_depth": 121,
+      "/bricsbot/odometry": 801
+    },
+    "node_uri_after": "http://localhost:37247/"
+  }
+}

@@ -9,6 +9,7 @@ src/CMakeLists.txt
 __pycache__/
 *.py[cod]
 .pytest_cache/
+.vscode/
 
 underwater_objectnav_online_runs/
 underwater_objectnav_dataset/

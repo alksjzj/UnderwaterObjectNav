@@ -1,0 +1,14 @@
+<launch>
+  <arg name="variant" default="rgb15"/>
+  <include file="$(find stonefish_ros)/launch/simulator.launch">
+    <arg name="simulation_data" value="$(find aquaflow_stonefish)/data"/>
+    <arg name="scenario_description" value="/workspace/learning/day-05/scenarios/$(arg variant)_scene.scn"/>
+    <arg name="simulation_rate" value="100.0"/>
+    <arg name="graphics_resolution" value="1000 700"/>
+    <arg name="graphics_quality" value="low"/>
+  </include>
+  <include file="$(find aquaflow_stonefish)/launch/visualization.launch">
+    <arg name="vehicle_model" value="bricsbot"/>
+    <arg name="rviz_config" value="../../learning/day-05/sensor_view.rviz"/>
+  </include>
+</launch>

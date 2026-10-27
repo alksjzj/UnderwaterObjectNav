@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- Run the keyboard publisher separately in an interactive terminal. -->
+  <arg name="enable" default="false"/>
+  <arg name="graphics_quality" default="low"/>
+  <arg name="show_rviz" default="true"/>
+
+  <include file="$(find aquaflow_stonefish)/launch/aquaflow_pool.launch">
+    <arg name="scene" value="random_pillars"/>
+    <arg name="vehicle_model" value="bricsbot"/>
+    <arg name="graphics_quality" value="$(arg graphics_quality)"/>
+  </include>
+
+  <include if="$(arg show_rviz)"
+           file="$(find aquaflow_stonefish)/launch/visualization.launch">
+    <arg name="vehicle_model" value="bricsbot"/>
+  </include>
+
+  <include file="$(find robot_control)/launch/action_executor.launch"/>
+  <include file="$(find robot_control)/launch/cascaded_pid_control.launch"/>
+
+  <node pkg="aquaflow_stonefish" type="brics6_thruster_allocator.py"
+        name="brics6_thruster_allocator" output="screen">
+    <param name="vehicle_name" value="bricsbot"/>
+    <param name="enabled" value="$(arg enable)"/>
+  </node>
+</launch>

@@ -1,0 +1,107 @@
+{
+  "scope": "Stonefish RGB sensor rate comparison with RViz subscribed; no controller or thruster publisher",
+  "master_port": 11361,
+  "original_source_sha256": {
+    "src/aquaflow_stonefish/data/bricsbot/bricsbot.urdf": "226b3b743298f931ad57bf0bb165053721e93c3f76d0ee7b70ce1cb0210280b1",
+    "src/aquaflow_stonefish/launch/visualization.launch": "2f55eef428e5e42b9e461608f8f862e618dea869924b01bf0efa0c6f562e19da",
+    "src/aquaflow_stonefish/scenarios/bricsbot_reference.scn": "2efd452807e00c4cb83715ec6397dcaa4a6c1daedd898224cb5a8495e914c275",
+    "src/aquaflow_stonefish/scenarios/aquaflow_random_pillars.scn": "b36651468a0f18b4df23de04b761391e27abdbd7b6350426b40828c7dc4c8805"
+  },
+  "variants": {
+    "rgb15": {
+      "wall_window_seconds": 10.009462788999372,
+      "topics": {
+        "rgb": {
+          "count": 150,
+          "wall_hz": 15.0018498071183,
+          "header_hz": 15.005035506121356,
+          "sample": {
+            "frame_id": "bricsbot/rgb_camera",
+            "width": 640,
+            "height": 480,
+            "encoding": "rgb8"
+          }
+        },
+        "depth": {
+          "count": 150,
+          "wall_hz": 15.004738009363914,
+          "header_hz": 15.02016153580022,
+          "sample": {
+            "frame_id": "bricsbot/depth_camera",
+            "width": 640,
+            "height": 480,
+            "encoding": "32FC1"
+          }
+        },
+        "odometry": {
+          "count": 1000,
+          "wall_hz": 99.9367717551599,
+          "header_hz": 99.9999999045371,
+          "sample": {
+            "frame_id": "world_ned"
+          }
+        }
+      },
+      "rgb_publishers": [
+        "/stonefish_simulator"
+      ],
+      "rgb_subscribers": [
+        "/aquaflow_rviz",
+        "/day5_rate_observer_223_1792998731707"
+      ],
+      "loaded_urdf_sha256": "226b3b743298f931ad57bf0bb165053721e93c3f76d0ee7b70ce1cb0210280b1",
+      "loaded_visual_scale": "1 1 1",
+      "thruster_publishers": []
+    },
+    "rgb5": {
+      "wall_window_seconds": 10.009293719999732,
+      "topics": {
+        "rgb": {
+          "count": 50,
+          "wall_hz": 5.0007016887660765,
+          "header_hz": 5.000000024328426,
+          "sample": {
+            "frame_id": "bricsbot/rgb_camera",
+            "width": 640,
+            "height": 480,
+            "encoding": "rgb8"
+          }
+        },
+        "depth": {
+          "count": 150,
+          "wall_hz": 15.003817772283215,
+          "header_hz": 14.98993991108138,
+          "sample": {
+            "frame_id": "bricsbot/depth_camera",
+            "width": 640,
+            "height": 480,
+            "encoding": "32FC1"
+          }
+        },
+        "odometry": {
+          "count": 1002,
+          "wall_hz": 100.01864599356496,
+          "header_hz": 100.00000009527216,
+          "sample": {
+            "frame_id": "world_ned"
+          }
+        }
+      },
+      "rgb_publishers": [
+        "/stonefish_simulator"
+      ],
+      "rgb_subscribers": [
+        "/aquaflow_rviz",
+        "/day5_rate_observer_204_1792998775912"
+      ],
+      "loaded_urdf_sha256": "226b3b743298f931ad57bf0bb165053721e93c3f76d0ee7b70ce1cb0210280b1",
+      "loaded_visual_scale": "1 1 1",
+      "thruster_publishers": []
+    }
+  },
+  "cleanup": {
+    "container_removed": true,
+    "master_port_released": true,
+    "original_sources_unchanged": true
+  }
+}

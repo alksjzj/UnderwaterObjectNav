@@ -1,5 +1,7 @@
 # UnderwaterObjectNav
 
+初学者请先阅读 [学习方法.md](学习方法.md)：14 天、每天约 2–3 小时，以 Agent 辅助实验和读代码为主，依次学习场景、SCN/URDF、控制闭环、Stonefish 源码与导航模块。
+
 面向水下目标导航学习的 ROS 1 工程。项目使用 **Stonefish 1.6** 构建水下仿真环境，以 **BricsBot / BlueROV2** 为载体，包含场景仿真、底层控制、专家数据采集、GFL 海胆检测、语义地图、行为克隆（BC）策略和在线闭环导航。
 
 仓库提供一套隔离的 Docker 环境：宿主机继续使用 Ubuntu 24.04 + ROS 2 Jazzy，容器内部使用 Ubuntu 20.04 + ROS Noetic。宿主机的 ROS 2 环境不会被修改，也不会与容器的 Python 3.8 / 3.10 环境混用。

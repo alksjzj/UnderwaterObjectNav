@@ -1,0 +1,73 @@
+{
+  "scope": "RViz display only; synthetic fixed world pose; no Stonefish",
+  "master_port": 11351,
+  "original_source_sha256": {
+    "src/aquaflow_stonefish/data/bricsbot/bricsbot.urdf": "226b3b743298f931ad57bf0bb165053721e93c3f76d0ee7b70ce1cb0210280b1",
+    "src/aquaflow_stonefish/launch/visualization.launch": "2f55eef428e5e42b9e461608f8f862e618dea869924b01bf0efa0c6f562e19da",
+    "src/aquaflow_stonefish/scenarios/bricsbot_reference.scn": "2efd452807e00c4cb83715ec6397dcaa4a6c1daedd898224cb5a8495e914c275",
+    "src/aquaflow_stonefish/scenarios/aquaflow_random_pillars.scn": "b36651468a0f18b4df23de04b761391e27abdbd7b6350426b40828c7dc4c8805"
+  },
+  "variants": {
+    "original": {
+      "visual_scale": "1 1 1",
+      "camera_translation": [
+        0.2,
+        0.0,
+        -0.02
+      ],
+      "camera_quaternion": [
+        0.5,
+        0.5000000000025516,
+        0.5,
+        0.49999999999744826
+      ],
+      "nodes": [
+        "/aquaflow_rviz",
+        "/day5_test_world_pose",
+        "/day5_display_observer_178_1792997866416",
+        "/bricsbot_depth_camera_tf",
+        "/bricsbot_rgb_camera_tf",
+        "/rosout"
+      ],
+      "captured_view": {
+        "Distance": 1.649999976158142,
+        "Pitch": 0.6499999761581421,
+        "Yaw": 0.699999988079071,
+        "Invert Z Axis": true
+      }
+    },
+    "scaled": {
+      "visual_scale": "2 2 2",
+      "camera_translation": [
+        0.2,
+        0.0,
+        -0.02
+      ],
+      "camera_quaternion": [
+        0.5,
+        0.5000000000025516,
+        0.5,
+        0.49999999999744826
+      ],
+      "nodes": [
+        "/rosout",
+        "/day5_test_world_pose",
+        "/bricsbot_rgb_camera_tf",
+        "/aquaflow_rviz",
+        "/bricsbot_depth_camera_tf",
+        "/day5_display_observer_140_1792997884822"
+      ],
+      "captured_view": {
+        "Distance": 1.649999976158142,
+        "Pitch": 0.6499999761581421,
+        "Yaw": 0.699999988079071,
+        "Invert Z Axis": true
+      }
+    }
+  },
+  "cleanup": {
+    "experiment_container_removed": true,
+    "master_port_released": true,
+    "original_sources_unchanged": true
+  }
+}

@@ -18,7 +18,7 @@
 文档入口：
 
 - [离线训练与评估](objectnav_bc/README.md)
-- [需求分析、坐标和网络输入说明](underwater_objectnav_gfl_depth_bc_reference.md)
+- [算法框架、坐标和网络输入说明](underwater_objectnav_algorithm_framework_gfl_bbox_depth_bc_mlp.md)
 - [在线 ROS 架构、启动、服务、可视化与记录](underwater_objectnav_online_usage.md)
 
 在线 Catkin 包名为小写 `objectnav`，目录仍为 `ObjectNav`：
